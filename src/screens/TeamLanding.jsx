@@ -11,7 +11,7 @@ import Contact from "../components/Sections/Contact";
 import Footer from "../components/Sections/Footer";
 import Team from "../components/Sections/Team";
 import HeaderImage from "../assets/img/add_udaan_3.jpg";
-import AtharvaBhawsar from "../assets/img/Team/AtharvaBhawsar.jpg";
+// import AtharvaBhawsar from "../assets/img/Team/AtharvaBhawsar.jpg";
 import Monalisa from "../assets/img/Team/Monalisa.jpg";
 import AmoghPraveenPete from "../assets/img/Team/AmoghPraveenPete.jpg";
 import AyushAgarwal from "../assets/img/Team/AyushAgarwal.jpg";
@@ -67,25 +67,23 @@ import UMANGVERMA from "../assets/img/Team/UMANGVERMA.jpg";
 import SUMANSHRIWAS from "../assets/img/Team/SUMANSHRIWAS.jpg";
 import AKHILPATEL from "../assets/img/Team/AKHILPATEL.jpg";
 
-
 const Teamdiv = styled.div`
-.buttonD{
-  border : 1px solid black;
-  background-color: black;
-  color:white;
-  border-radius: 20px;
-  padding:0.5vh 0.5vw 0.5vh 0.5vw;
-  margin:0.5vh 0.5vw 0.5vh 0.5vw;
-  :hover{
-    transform: scale(1.05);
+  .buttonD {
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    border-radius: 20px;
+    padding: 0.5vh 0.5vw 0.5vh 0.5vw;
+    margin: 0.5vh 0.5vw 0.5vh 0.5vw;
+    :hover {
+      transform: scale(1.05);
+    }
   }
-}
-p{
-  text-align: center;
-  display: inline-flex;
-}
+  p {
+    text-align: center;
+    display: inline-flex;
+  }
 `;
-
 
 function TeamLanding() {
   useLayoutEffect(() => {
@@ -105,69 +103,49 @@ function TeamLanding() {
         content="Our people are what turn this club into a home away from home. Each one fits and works in unison to produce the magnum opus that UDAAN is. Come let’s know the parts that make up the whole."
       />
       {/* <VCSir/> */}
-      <ManishSir/>
-      <Teamdiv style={{paddingTop:"10vh",textAlign:"center"}} id="teamnav">
+      <ManishSir />
+      <Teamdiv style={{ paddingTop: "10vh", textAlign: "center" }} id="teamnav">
         <ol>
-        <p className="pointer buttonD"
+          <p
+            className="pointer buttonD"
             onClick={() => setActive("SecondCard")}
           >
             Art & design Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
+          &nbsp; • &nbsp;
+          <p
+            className="pointer buttonD"
             onClick={() => setActive("FourthCard")}
           >
             English Editorial Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
-            onClick={() => setActive("FifthCard")}
-          >
+          &nbsp; • &nbsp;
+          <p className="pointer buttonD" onClick={() => setActive("FifthCard")}>
             Graphic Design Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
-            onClick={() => setActive("ThirdCard")}
-          >
+          &nbsp; • &nbsp;
+          <p className="pointer buttonD" onClick={() => setActive("ThirdCard")}>
             Hindi Editorial Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
-            onClick={() => setActive("SixthCard")}
-          >
+          &nbsp; • &nbsp;
+          <p className="pointer buttonD" onClick={() => setActive("SixthCard")}>
             Marketing Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
+          &nbsp; • &nbsp;
+          <p
+            className="pointer buttonD"
             onClick={() => setActive("SeventhCard")}
           >
             Photography Board
           </p>
-          &nbsp;
-          • 
-          &nbsp;
-          <p className="pointer buttonD"
-            onClick={() => setActive("FirstCard")}
-          >
+          &nbsp; • &nbsp;
+          <p className="pointer buttonD" onClick={() => setActive("FirstCard")}>
             Website Board
           </p>
-          
         </ol>
       </Teamdiv>
       <div>
-      {active === "CoordinatorCard" && (
-          <Coordinators/>
-        )}
+        {active === "CoordinatorCard" && <Coordinators />}
         {active === "FirstCard" && (
           <Team
             board="Website Board"
@@ -182,7 +160,7 @@ function TeamLanding() {
             member1Name="Atharva Bhawsar"
             member4Name="Monalisa"
             member6Name="Srijani Som"
-            M2={AtharvaBhawsar}
+            // M2={AtharvaBhawsar}
             M5={Monalisa}
             M1={AmoghPraveenPete}
             M3={AyushAgarwal}
@@ -339,7 +317,5 @@ function TeamLanding() {
     </div>
   );
 }
-
-
 
 export default TeamLanding;
