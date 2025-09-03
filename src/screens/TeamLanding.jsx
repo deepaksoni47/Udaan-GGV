@@ -12,7 +12,7 @@ import Footer from "../components/Sections/Footer";
 import Team from "../components/Sections/Team";
 import HeaderImage from "../assets/img/add_udaan_3.jpg";
 // import AtharvaBhawsar from "../assets/img/Team/AtharvaBhawsar.jpg";
-import Monalisa from "../assets/img/Team/Monalisa.jpg";
+// import Monalisa from "../assets/img/Team/Monalisa.jpg";
 import AmoghPraveenPete from "../assets/img/Team/AmoghPraveenPete.jpg";
 import AyushAgarwal from "../assets/img/Team/AyushAgarwal.jpg";
 import SrijaniSom from "../assets/img/Team/SrijaniSom.jpg";
@@ -161,7 +161,7 @@ function TeamLanding() {
             member4Name="Monalisa"
             member6Name="Srijani Som"
             // M2={AtharvaBhawsar}
-            M5={Monalisa}
+            // M5={Monalisa}
             M1={AmoghPraveenPete}
             M3={AyushAgarwal}
             M7={SrijaniSom}
