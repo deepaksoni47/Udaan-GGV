@@ -8,6 +8,7 @@ import MagazineLanding from "./screens/MagazineLanding.jsx";
 import GalleryLanding from "./screens/GalleryLanding.jsx";
 import "./App.css";
 import TopNavbar from "./components/Nav/TopNavbar.jsx";
+import UdaanSubmissionComponent from "./screens/UdaanSubmissionComponent.jsx";
 
 export default function App() {
   return (
@@ -37,6 +38,10 @@ export default function App() {
         {/* <Route path="/team" element={<Teamlanding />}></Route> */}
         <Route path="/magazines" element={<MagazineLanding />}></Route>
         <Route path="*" element={<Landing />}></Route>
+        <Route
+          path="/submission"
+          element={<UdaanSubmissionComponent />}
+        ></Route>
       </Routes>
     </div>
   );

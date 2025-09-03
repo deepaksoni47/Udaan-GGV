@@ -1,6 +1,8 @@
-import React,{useRef} from 'react'
+import React, { useRef } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+
 // import Modal from './Modal';
 // Components
 // import ClientSlider from "../Elements/ClientSlider";
@@ -12,104 +14,105 @@ import AddImage2 from "../../assets/img/add_udaan_6.jpg";
 import AddImage3 from "../../assets/img/add_udaan_7.jpg";
 import AddImage4 from "../../assets/img/add_udaan_8.jpg";
 export default function ContentInvite() {
-  const [openModal, setOpenModal] = React.useState(false)
-    const scrollRef = useRef(null)
-    const handleButtonClick = () => {
-    setOpenModal(true);
-    // Redirect to the Google Form link
-    window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSfWj7bnad8OhfYhtM56MvKs8XAnDuzM0O8bWZk3fF--xbe8iA/viewform';
+  const [openModal, setOpenModal] = React.useState(false);
+  const scrollRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate("/submission"); // redirect to your submission page route
   };
+
   return (
-    <Wrapper >
+    <Wrapper>
       <div className="whiteBg">
         <div className="container">
-          <HeaderInfo >
+          <HeaderInfo>
             <h4 className="font15 semiBold">Get excited!</h4>
             <h1 className="font40 extraBold">We are accepting submissions</h1>
-            <br/>
+            <br />
             <ContentP className="font13">
-            Season X of UDAAN magazine is now inviting submissions for the 2022-23 issue.
-Submissions are open from the 16th July 2023 to the 10th August 2023. You
-can submit your content online in the given form below or offline in the UDAAN drop-boxes
-placed at all important locations across the university.
-
+              Season XI of UDAAN magazine is now inviting submissions for the
+              2022-23 issue. Submissions are open from the 8th September 2025.
+              You can submit your content online in the given form below.
               <br />
               The categories under which you can submit are-
             </ContentP>
           </HeaderInfo>
           <ServiceBoxRow className="flex">
-            
-            <ServiceBoxWrapper >
-            <motion.div whileHover={{ scale: 1.05}}>
-            <a href = "#contentInvite">
-              <ServiceBox
-                icon="roller"
-                title="Art & Design"
-                subtitle="A clear picture of your original artwork in JPEG/JPG format and not
+            <ServiceBoxWrapper>
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <a href="#contentInvite">
+                  <ServiceBox
+                    icon="roller"
+                    title="Art & Design"
+                    subtitle="A clear picture of your original artwork in JPEG/JPG format and not
                 more than 25Mb."
-              />
-              </a>
+                  />
+                </a>
               </motion.div>
             </ServiceBoxWrapper>
-            
+
             <ServiceBoxWrapper>
-            <motion.div whileHover={{ scale: 1.05 }}>
-            <a href = "#contentInvite">
-              <ServiceBox
-                icon="monitor"
-                title="English Editorials"
-                subtitle="Original prose or poetry, fiction or non-fiction, in PDF format, with
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <a href="#contentInvite">
+                  <ServiceBox
+                    icon="monitor"
+                    title="English Editorials"
+                    subtitle="Original prose or poetry, fiction or non-fiction, in PDF format, with
                 not more than 400 words."
-              />
-              </a>
-            </motion.div>
+                  />
+                </a>
+              </motion.div>
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
-            <motion.div whileHover={{ scale: 1.05 }}>
-            <a href = "#contentInvite">
-              <ServiceBox
-                icon="browser"
-                title="Hindi Editorials"
-                subtitle="Original prose or poetry, fiction or non-fiction, in PDF format, with not
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <a href="#contentInvite">
+                  <ServiceBox
+                    icon="browser"
+                    title="Hindi Editorials"
+                    subtitle="Original prose or poetry, fiction or non-fiction, in PDF format, with not
                 more than 400 words."
-              />
-              </a>
-            </motion.div>
+                  />
+                </a>
+              </motion.div>
             </ServiceBoxWrapper>
             <ServiceBoxWrapper>
-            <motion.div whileHover={{ scale: 1.05 }}>
-            <a href = "#contentInvite">
-              <ServiceBox
-                icon="printer"
-                title="Photography"
-                subtitle="Photographs clicked by you sent in JPEG/JPG format and not more than
+              <motion.div whileHover={{ scale: 1.05 }}>
+                <a href="#contentInvite">
+                  <ServiceBox
+                    icon="printer"
+                    title="Photography"
+                    subtitle="Photographs clicked by you sent in JPEG/JPG format and not more than
                 25Mb."
-              />
-            </a>
-            </motion.div> 
+                  />
+                </a>
+              </motion.div>
             </ServiceBoxWrapper>
           </ServiceBoxRow>
         </div>
-        <div  id="contentInvite" style={{padding:"12px"}}></div>
-        <div  className="accentBg lightColor">
+        <div id="contentInvite" style={{ padding: "12px" }}></div>
+        <div className="accentBg lightColor">
           <div className="container">
             <Advertising className="flexSpaceCenter">
               <AddLeft>
-                <ContentP className="font15 semiBold">Put on your creative hats!</ContentP>
+                <ContentP className="font15 semiBold">
+                  Put on your creative hats!
+                </ContentP>
                 <h2 className="font40 extraBold">A Study of Creativity</h2>
                 <ContentP className="font15">
-                We are eager to see your flair so don't hesitate to flaunt your best works.
+                  We are eager to see your flair so don't hesitate to flaunt
+                  your best works.
                 </ContentP>
                 <ButtonsRow
                   className="flexNullCenter"
                   style={{ margin: "30px 0" }}
                 >
                   <div style={{ width: "190px" }}>
-                  <FullButton
-        mode="dark"
-        title="Upload Content"
-        action={handleButtonClick}
-      />
+                    <FullButton
+                      mode="dark"
+                      title="Upload Content"
+                      action={handleButtonClick}
+                    />
                     {/* <FullButton
                       mode="dark"
                       title="Upload Content"
@@ -117,45 +120,58 @@ placed at all important locations across the university.
                     />
                     <Modal open={openModal} onClose = {() => setOpenModal(false)} /> */}
                   </div>
-                  <ContactButton style={{ width:"190px" }}>
-                    <a href = "#cont">
-                    <FullButton
-                      mode="dark"
-                      title="Contact Us"
-                    />
+                  <ContactButton style={{ width: "190px" }}>
+                    <a href="#cont">
+                      <FullButton mode="dark" title="Contact Us" />
                     </a>
                   </ContactButton>
                 </ButtonsRow>
               </AddLeft>
               <AddRight>
-              <div ref={scrollRef} style={{ overflow: "scroll" }}>
-                <AddRightInner>
-                  <div className="flexNullCenter">
-                    <AddImgWrapp1 className="flexCenter">
-                      <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{duration:3}}>
-                      <img  src={AddImage1} alt="office" />
-                      </motion.div>
-                    </AddImgWrapp1>
-                    <AddImgWrapp2>
-                    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{duration:4}}>
-                      <img src={AddImage2} alt="office" />
-                      </motion.div>
-                    </AddImgWrapp2>
-                  </div>
-                  <div className="flexNullCenter">
-                    <AddImgWrapp3>
-                    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{duration:1}}>
-                      <img src={AddImage3} alt="office" />
-                      </motion.div>
-                    </AddImgWrapp3>
-                    <AddImgWrapp4>
-                    <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} transition={{duration:2}}>
-                      <img src={AddImage4} alt="office" />
-                      </motion.div>
-                    </AddImgWrapp4>
-                  </div>
-                </AddRightInner>
-              </div>
+                <div ref={scrollRef} style={{ overflow: "scroll" }}>
+                  <AddRightInner>
+                    <div className="flexNullCenter">
+                      <AddImgWrapp1 className="flexCenter">
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 3 }}
+                        >
+                          <img src={AddImage1} alt="office" />
+                        </motion.div>
+                      </AddImgWrapp1>
+                      <AddImgWrapp2>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 4 }}
+                        >
+                          <img src={AddImage2} alt="office" />
+                        </motion.div>
+                      </AddImgWrapp2>
+                    </div>
+                    <div className="flexNullCenter">
+                      <AddImgWrapp3>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 1 }}
+                        >
+                          <img src={AddImage3} alt="office" />
+                        </motion.div>
+                      </AddImgWrapp3>
+                      <AddImgWrapp4>
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          whileInView={{ opacity: 1 }}
+                          transition={{ duration: 2 }}
+                        >
+                          <img src={AddImage4} alt="office" />
+                        </motion.div>
+                      </AddImgWrapp4>
+                    </div>
+                  </AddRightInner>
+                </div>
               </AddRight>
             </Advertising>
           </div>
@@ -171,14 +187,14 @@ placed at all important locations across the university.
 }
 
 const ContactButton = styled.div`
-@media(min-width:860px){ 
-margin-left: "8px";
-}
+  @media (min-width: 860px) {
+    margin-left: "8px";
+  }
 `;
 
 const Wrapper = styled.section`
   width: 100%;
-  font-family: 'Playfair Display', serif;
+  font-family: "Playfair Display", serif;
 `;
 const ServiceBoxRow = styled.div`
   @media (max-width: 860px) {
@@ -189,29 +205,29 @@ const ServiceBoxWrapper = styled.div`
   width: 20%;
   text-align: center;
   margin-right: 5%;
-  margin-top:6vh;
+  margin-top: 6vh;
   margin-bottom: 6vh;
   padding: 8vh 1vh;
   @media (max-width: 860px) {
     width: 100%;
-    margin-top:4vh;
+    margin-top: 4vh;
     margin-bottom: 4vh;
   }
-  :hover{
-    box-shadow:rgba(55,214,244, 0.3) 0px 5px 15px;
+  :hover {
+    box-shadow: rgba(55, 214, 244, 0.3) 0px 5px 15px;
     border-radius: 50px;
-    box-sizing:border-box;
+    box-sizing: border-box;
   }
 `;
 const HeaderInfo = styled.div`
-    text-align: center;
-    margin-bottom:30px;
-    font-family: 'EB Garamond', serif;
+  text-align: center;
+  margin-bottom: 30px;
+  font-family: "EB Garamond", serif;
 `;
 const ContentP = styled.p`
-font-family: 'Montserrat', sans-serif;
-font-weight: bold;
-`
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+`;
 const Advertising = styled.div`
   margin: 20vh 0;
   padding: 100px 0;
