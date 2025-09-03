@@ -144,7 +144,7 @@ function TeamLanding() {
           </p>
         </ol>
       </Teamdiv>
-      <div>
+      {/* <div>
         {active === "CoordinatorCard" && <Coordinators />}
         {active === "FirstCard" && (
           <Team
@@ -311,7 +311,7 @@ function TeamLanding() {
             //M6={APURVAAZAD}
           />
         )}
-      </div>
+      </div> */}
       <Contact />
       <Footer />
     </div>
