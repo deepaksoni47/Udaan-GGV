@@ -203,7 +203,7 @@ const UdaanSubmissionPortal = () => {
 
       // Append file if exists (Strapi will handle Cloudinary upload)
       if (formData.file) {
-        submitData.append("files", formData.file);
+        submitData.append("files.file", formData.file);
       }
 
       // Submit to Strapi API
