@@ -250,6 +250,10 @@ const UdaanSubmissionPortal = () => {
 
       setSubmissionResult(submissionData);
       setCurrentView("success");
+      setSubmitStatus("success");
+      setStatusMessage(
+        "Submission successful! Thank you for your contribution."
+      );
 
       // Reset form after successful submission
       setFormData({
