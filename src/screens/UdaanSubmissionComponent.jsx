@@ -194,7 +194,7 @@ const UdaanSubmissionPortal = () => {
         description: formData.description?.trim() || null,
         content: formData.content.trim(),
         category: activeTab,
-        status: "pending",
+        statuses: "pending",
         submittedAt: new Date().toISOString(),
       };
 
