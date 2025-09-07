@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-
+import SubmissionSuccess from "./SubmissionSuccess";
 const UdaanSubmissionPortal = () => {
   const [activeTab, setActiveTab] = useState("art-design");
   const [isVisible, setIsVisible] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null); // null, 'success', 'error'
   const [statusMessage, setStatusMessage] = useState("");
+  const [currentView, setCurrentView] = useState("form");
+  const [submissionResult, setSubmissionResult] = useState(null);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -236,11 +238,18 @@ const UdaanSubmissionPortal = () => {
 
       const result = await response.json();
       console.log("Submission successful:", result);
+      const submissionData = {
+        id: result.data?.id || `SUB-${Date.now()}`,
+        name: formData.name,
+        email: formData.email,
+        title: formData.title,
+        category: activeTab,
+        submittedAt: new Date().toISOString(),
+        status: "pending",
+      };
 
-      setSubmitStatus("success");
-      setStatusMessage(
-        "Content submitted successfully! Our editors will review it soon."
-      );
+      setSubmissionResult(submissionData);
+      setCurrentView("success");
 
       // Reset form after successful submission
       setFormData({
@@ -273,6 +282,15 @@ const UdaanSubmissionPortal = () => {
       setIsSubmitting(false);
     }
   };
+  const handleBackToForm = () => {
+    setCurrentView("form");
+    setSubmissionResult(null);
+  };
+  const handleNewSubmission = () => {
+    setCurrentView("form");
+    setSubmissionResult(null);
+    setActiveTab("art-design");
+  };
 
   const getContentPlaceholder = () => {
     switch (activeTab) {
@@ -288,6 +306,15 @@ const UdaanSubmissionPortal = () => {
         return "Enter your content here...";
     }
   };
+  if (currentView === "success" && submissionResult) {
+    return (
+      <SubmissionSuccess
+        submissionData={submissionResult}
+        onBack={handleBackToForm}
+        onNewSubmission={handleNewSubmission}
+      />
+    );
+  }
 
   return (
     <div style={styles.container}>
