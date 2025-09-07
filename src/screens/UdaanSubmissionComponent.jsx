@@ -203,7 +203,7 @@ const UdaanSubmissionPortal = () => {
 
       // Append file if exists (Strapi will handle Cloudinary upload)
       if (formData.file) {
-        submitData.append("files.file", formData.file);
+        submitData.append("files", formData.file);
       }
 
       // Submit to Strapi API
@@ -410,18 +410,291 @@ const UdaanSubmissionPortal = () => {
                       required
                       disabled={isSubmitting}
                     >
-                      <option value="">Select your degree</option>
-                      <option value="B.Tech">B.Tech</option>
-                      <option value="M.Tech">M.Tech</option>
-                      <option value="B.Sc">B.Sc</option>
-                      <option value="M.Sc">M.Sc</option>
-                      <option value="BBA">BBA</option>
-                      <option value="MBA">MBA</option>
-                      <option value="B.Com">B.Com</option>
-                      <option value="M.Com">M.Com</option>
-                      <option value="BA">BA</option>
-                      <option value="MA">MA</option>
-                      <option value="PhD">PhD</option>
+                      <option value="B.Tech in Artificial Intelligence & Data Science">
+                        B.Tech in Artificial Intelligence & Data Science
+                      </option>
+                      <option value="B.Tech in VFX & Animation">
+                        B.Tech in VFX & Animation
+                      </option>
+                      <option value="B.C.A.">B.C.A.</option>
+                      <option value="B.Sc. (Honours) Physics">
+                        B.Sc. (Honours) Physics
+                      </option>
+                      <option value="B.Sc. (Honours) Botany">
+                        B.Sc. (Honours) Botany
+                      </option>
+                      <option value="B.Sc. (Honours) Chemistry">
+                        B.Sc. (Honours) Chemistry
+                      </option>
+                      <option value="B.Com. (Honours)">B.Com. (Honours)</option>
+                      <option value="B.Sc. (Honours) Computer Science">
+                        B.Sc. (Honours) Computer Science
+                      </option>
+                      <option value="B.A. (Honours) Economics">
+                        B.A. (Honours) Economics
+                      </option>
+                      <option value="B.Sc. (Honours) Electronics">
+                        B.Sc. (Honours) Electronics
+                      </option>
+                      <option value="B.A. (Honours) English">
+                        B.A. (Honours) English
+                      </option>
+                      <option value="B.A. (Honours) Hindi">
+                        B.A. (Honours) Hindi
+                      </option>
+                      <option value="B.A. (Honours) History">
+                        B.A. (Honours) History
+                      </option>
+                      <option value="B.A. (Honours) Journalism and Mass Communication">
+                        B.A. (Honours) Journalism and Mass Communication
+                      </option>
+                      <option value="B.Sc. (Honours) Mathematics">
+                        B.Sc. (Honours) Mathematics
+                      </option>
+                      <option value="B.A. (Honours) Political Science">
+                        B.A. (Honours) Political Science
+                      </option>
+                      <option value="B.Sc. (Honours) Rural Technology And Social Development">
+                        B.Sc. (Honours) Rural Technology And Social Development
+                      </option>
+                      <option value="B.Sc. (Honours) Zoology">
+                        B.Sc. (Honours) Zoology
+                      </option>
+                      <option value="B.Sc. (Honours) Forensic Science">
+                        B.Sc. (Honours) Forensic Science
+                      </option>
+                      <option value="B.A. L.L.B.">B.A. L.L.B.</option>
+                      <option value="B.Com. L.L.B.">B.Com. L.L.B.</option>
+                      <option value="B.S.W.">B.S.W.</option>
+                      <option value="B.Sc. (Forestry)">B.Sc. (Forestry)</option>
+                      <option value="B.Ed.">B.Ed.</option>
+                      <option value="B.Lib.I.Sc.">B.Lib.I.Sc.</option>
+                      <option value="B.P.Ed.">B.P.Ed.</option>
+                      <option value="B.Pharm. (Pharmaceutical Sciences)">
+                        B.Pharm. (Pharmaceutical Sciences)
+                      </option>
+                      <option value="B.Ed. Spl. Ed. (H.I.)">
+                        B.Ed. Spl. Ed. (H.I.)
+                      </option>
+                      <option value="B.Ed. Spl. Ed. (L.D.)">
+                        B.Ed. Spl. Ed. (L.D.)
+                      </option>
+                      <option value="B.Tech. Electrical Engineering">
+                        B.Tech. Electrical Engineering
+                      </option>
+                      <option value="B.Tech. Chemical Engineering">
+                        B.Tech. Chemical Engineering
+                      </option>
+                      <option value="B.Tech. Civil Engineering">
+                        B.Tech. Civil Engineering
+                      </option>
+                      <option value="B.Tech. Computer Science And Engineering">
+                        B.Tech. Computer Science And Engineering
+                      </option>
+                      <option value="B.Tech. Electronics and Communication Engineering">
+                        B.Tech. Electronics and Communication Engineering
+                      </option>
+                      <option value="B.Tech. Industrial And Production Engineering">
+                        B.Tech. Industrial And Production Engineering
+                      </option>
+                      <option value="B.Tech. Information Technology">
+                        B.Tech. Information Technology
+                      </option>
+                      <option value="B.Tech. Mechanical Engineering">
+                        B.Tech. Mechanical Engineering
+                      </option>
+                      <option value="B.Sc. (Honours) Biotechnology">
+                        B.Sc. (Honours) Biotechnology
+                      </option>
+                      <option value="B.A. (Honours) Anthropology And Tribal Development">
+                        B.A. (Honours) Anthropology And Tribal Development
+                      </option>
+                      <option value="B.Sc. (Honours) Anthropology And Tribal Development">
+                        B.Sc. (Honours) Anthropology And Tribal Development
+                      </option>
+                      <option value="M.Pharm. (Pharmacology)">
+                        M.Pharm. (Pharmacology)
+                      </option>
+                      <option value="M.Pharm. (Pharmacognosy)">
+                        M.Pharm. (Pharmacognosy)
+                      </option>
+                      <option value="M.Pharm. (Pharmaceutical Chemistry)">
+                        M.Pharm. (Pharmaceutical Chemistry)
+                      </option>
+                      <option value="M.Pharm. (Pharmaceutics)">
+                        M.Pharm. (Pharmaceutics)
+                      </option>
+                      <option value="L.L.M.">L.L.M.</option>
+                      <option value="M.P.Ed.">M.P.Ed.</option>
+                      <option value="M.Ed.">M.Ed.</option>
+                      <option value="M.B.A.">M.B.A.</option>
+                      <option value="M.A. Anthropology And Tribal Development">
+                        M.A. Anthropology And Tribal Development
+                      </option>
+                      <option value="M.Tech. Mechanical Engineering">
+                        M.Tech. Mechanical Engineering
+                      </option>
+                      <option value="M.Tech. Information Technology">
+                        M.Tech. Information Technology
+                      </option>
+                      <option value="M.Tech. Industrial And Production Engineering">
+                        M.Tech. Industrial And Production Engineering
+                      </option>
+                      <option value="M.Tech. Electronics And Communication Engineering">
+                        M.Tech. Electronics And Communication Engineering
+                      </option>
+                      <option value="M.Tech. Computer Science And Engineering">
+                        M.Tech. Computer Science And Engineering
+                      </option>
+                      <option value="M.Tech. Civil Engineering">
+                        M.Tech. Civil Engineering
+                      </option>
+                      <option value="M.Tech. Chemical Engineering">
+                        M.Tech. Chemical Engineering
+                      </option>
+                      <option value="M.Com.">M.Com.</option>
+                      <option value="M.Sc. Forensic Science">
+                        M.Sc. Forensic Science
+                      </option>
+                      <option value="M.A. Political Science">
+                        M.A. Political Science
+                      </option>
+                      <option value="M.Lib.I.Sc.">M.Lib.I.Sc.</option>
+                      <option value="M.A. Journalism and Mass Communication">
+                        M.A. Journalism and Mass Communication
+                      </option>
+                      <option value="M.A. English">M.A. English</option>
+                      <option value="M.A. Hindi">M.A. Hindi</option>
+                      <option value="M.A. Economics">M.A. Economics</option>
+                      <option value="M.A. History">M.A. History</option>
+                      <option value="M.Sc. Anthropology And Tribal Development">
+                        M.Sc. Anthropology And Tribal Development
+                      </option>
+                      <option value="M.Sc. Forestry">M.Sc. Forestry</option>
+                      <option value="M.Sc. Rural Technology And Social Development">
+                        M.Sc. Rural Technology And Social Development
+                      </option>
+                      <option value="M.C.A.">M.C.A.</option>
+                      <option value="M.Sc. Computer Science">
+                        M.Sc. Computer Science
+                      </option>
+                      <option value="M.Sc. Biotechnology">
+                        M.Sc. Biotechnology
+                      </option>
+                      <option value="M.Sc. Chemistry">M.Sc. Chemistry</option>
+                      <option value="M.Sc. Botany">M.Sc. Botany</option>
+                      <option value="M.Sc. Zoology">M.Sc. Zoology</option>
+                      <option value="M.Sc. Mathematics">
+                        M.Sc. Mathematics
+                      </option>
+                      <option value="M.Sc. Electronics">
+                        M.Sc. Electronics
+                      </option>
+                      <option value="M.Sc. Physics">M.Sc. Physics</option>
+                      <option value="M.S.W.">M.S.W.</option>
+                      <option value="M.Sc. (Microbiology)">
+                        M.Sc. (Microbiology)
+                      </option>
+                      <option value="Ph.D. in Management Studies">
+                        Ph.D. in Management Studies
+                      </option>
+                      <option value="Ph.D. in Library And in Information Science">
+                        Ph.D. in Library And in Information Science
+                      </option>
+                      <option value="Ph.D. in Social Work">
+                        Ph.D. in Social Work
+                      </option>
+                      <option value="Ph.D. in Education">
+                        Ph.D. in Education
+                      </option>
+                      <option value="Ph.D. in Chemistry">
+                        Ph.D. in Chemistry
+                      </option>
+                      <option value="Ph.D. in Physics">Ph.D. in Physics</option>
+                      <option value="Ph.D. in Physical Education">
+                        Ph.D. in Physical Education
+                      </option>
+                      <option value="Ph.D. in Electronics">
+                        Ph.D. in Electronics
+                      </option>
+                      <option value="Ph.D. in Forensic Science">
+                        Ph.D. in Forensic Science
+                      </option>
+                      <option value="Ph.D. in Biotechnology">
+                        Ph.D. in Biotechnology
+                      </option>
+                      <option value="Ph.D. in Botany">Ph.D. in Botany</option>
+                      <option value="Ph.D. in Zoology">Ph.D. in Zoology</option>
+                      <option value="Ph.D. in Mathematics">
+                        Ph.D. in Mathematics
+                      </option>
+                      <option value="Ph.D. in Forestry">
+                        Ph.D. in Forestry
+                      </option>
+                      <option value="Ph.D. in Rural Technology And in Social Development">
+                        Ph.D. in Rural Technology And in Social Development
+                      </option>
+                      <option value="Ph.D. in Electronics And Communication in Engineering">
+                        Ph.D. in Electronics And Communication in Engineering
+                      </option>
+                      <option value="Ph.D. in Industrial And in Production Engineering">
+                        Ph.D. in Industrial And in Production Engineering
+                      </option>
+                      <option value="Ph.D. in Civil Engineering">
+                        Ph.D. in Civil Engineering
+                      </option>
+                      <option value="Ph.D. in Mechanical Engineering">
+                        Ph.D. in Mechanical Engineering
+                      </option>
+                      <option value="Ph.D. in Computer Science And in Engineering">
+                        Ph.D. in Computer Science And in Engineering
+                      </option>
+                      <option value="Ph.D. in Anthropology And in Information Technology">
+                        Ph.D. in Anthropology And in Information Technology
+                      </option>
+                      <option value="Ph.D. in Commerce">
+                        Ph.D. in Commerce
+                      </option>
+                      <option value="Ph.D. in Computer Science">
+                        Ph.D. in Computer Science
+                      </option>
+                      <option value="Ph.D. in Pharmaceutical in Sciences">
+                        Ph.D. in Pharmaceutical in Sciences
+                      </option>
+                      <option value="Ph.D. in English">Ph.D. in English</option>
+                      <option value="Ph.D. in Journalism And Mass in Communication">
+                        Ph.D. in Journalism And Mass in Communication
+                      </option>
+                      <option value="Ph.D. in Hindi">Ph.D. in Hindi</option>
+                      <option value="Ph.D. in Chemical Engineering">
+                        Ph.D. in Chemical Engineering
+                      </option>
+                      <option value="Ph.D. in Political Science">
+                        Ph.D. in Political Science
+                      </option>
+                      <option value="Ph.D. in Economics">
+                        Ph.D. in Economics
+                      </option>
+                      <option value="Ph.D. in Information Technology">
+                        Ph.D. in Information Technology
+                      </option>
+                      <option value="Ph.D. in Law">Ph.D. in Law</option>
+                      <option value="P.G. Diploma in Computational Linguistics">
+                        P.G. Diploma in Computational Linguistics
+                      </option>
+                      <option value="Diploma in French">
+                        Diploma in French
+                      </option>
+                      <option value="Diploma in German">
+                        Diploma in German
+                      </option>
+                      <option value="Diploma in Pharmacy">
+                        Diploma in Pharmacy
+                      </option>
+                      <option value="Certificate Course in Computational Linguistics (CCCL)">
+                        Certificate Course in Computational Linguistics (CCCL)
+                      </option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                   <div className="form-group">
@@ -449,12 +722,13 @@ const UdaanSubmissionPortal = () => {
                       disabled={isSubmitting}
                     >
                       <option value="">Select year</option>
-                      <option value="1st Year">1st Year</option>
-                      <option value="2nd Year">2nd Year</option>
-                      <option value="3rd Year">3rd Year</option>
-                      <option value="4th Year">4th Year</option>
-                      <option value="5th Year">5th Year</option>
+                      <option value="First Year">First Year</option>
+                      <option value="Second Year">Second Year</option>
+                      <option value="Third Year">Third Year</option>
+                      <option value="Fourth Year">Fourth Year</option>
+                      <option value="Fifth Year">Fifth Year</option>
                       <option value="Final Year">Final Year</option>
+                      <option value="Other">Other</option>
                     </select>
                   </div>
                 </div>
