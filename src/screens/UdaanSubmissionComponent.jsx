@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 const UdaanSubmissionPortal = () => {
   const [activeTab, setActiveTab] = useState("art-design");
   const [isVisible, setIsVisible] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null); // null, 'success', 'error'
+  const [statusMessage, setStatusMessage] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,9 +19,24 @@ const UdaanSubmissionPortal = () => {
     file: null,
   });
 
+  // Backend API Configuration - Update this URL with your deployed Strapi backend
+  const API_BASE_URL =
+    process.env.REACT_APP_API_URL || "http://localhost:1337/api";
+
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  // Auto-hide status messages after 5 seconds
+  useEffect(() => {
+    if (submitStatus) {
+      const timer = setTimeout(() => {
+        setSubmitStatus(null);
+        setStatusMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [submitStatus]);
 
   const tabs = [
     { id: "art-design", label: "Art & Design", icon: "🎨" },
@@ -33,18 +51,227 @@ const UdaanSubmissionPortal = () => {
       ...prev,
       [name]: value,
     }));
+
+    // Clear any previous status when user starts typing
+    if (submitStatus) {
+      setSubmitStatus(null);
+      setStatusMessage("");
+    }
   };
 
   const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
+    if (!file) {
+      setFormData((prev) => ({
+        ...prev,
+        file: null,
+      }));
+      return;
+    }
+
+    // Validate file size (10MB limit)
+    if (file.size > 10 * 1024 * 1024) {
+      setStatusMessage("File size must be less than 10MB");
+      setSubmitStatus("error");
+      e.target.value = "";
+      return;
+    }
+
+    // Validate file type based on category
+    const allowedTypes = {
+      photography: [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ],
+      "art-design": [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+        "application/pdf",
+      ],
+      "english-editorial": [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/plain",
+      ],
+      "hindi-editorial": [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "text/plain",
+      ],
+    };
+
+    if (
+      allowedTypes[activeTab] &&
+      !allowedTypes[activeTab].includes(file.type)
+    ) {
+      setStatusMessage(
+        `Invalid file type for ${
+          tabs.find((tab) => tab.id === activeTab)?.label
+        }. Please check allowed formats.`
+      );
+      setSubmitStatus("error");
+      e.target.value = "";
+      return;
+    }
+
     setFormData((prev) => ({
       ...prev,
-      file: e.target.files[0],
+      file: file,
     }));
   };
 
-  const handleSubmit = () => {
-    console.log("Form submitted:", formData);
-    alert("Content submitted successfully!");
+  // Form validation
+  const validateForm = () => {
+    const requiredFields = [
+      "name",
+      "email",
+      "degree",
+      "department",
+      "year",
+      "title",
+      "content",
+    ];
+    const missingFields = requiredFields.filter(
+      (field) => !formData[field] || formData[field].trim() === ""
+    );
+
+    if (missingFields.length > 0) {
+      setStatusMessage(
+        `Please fill in all required fields: ${missingFields.join(", ")}`
+      );
+      setSubmitStatus("error");
+      return false;
+    }
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setStatusMessage("Please enter a valid email address");
+      setSubmitStatus("error");
+      return false;
+    }
+
+    // Photography category requires file
+    if (activeTab === "photography" && !formData.file) {
+      setStatusMessage("Photography submissions require a file upload");
+      setSubmitStatus("error");
+      return false;
+    }
+
+    return true;
+  };
+
+  // Submit form to Strapi backend
+  const handleSubmit = async () => {
+    if (!validateForm()) return;
+
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+    setStatusMessage("");
+
+    try {
+      // Create FormData for multipart upload
+      const submitData = new FormData();
+
+      // Prepare form data according to Strapi's expected format
+      const jsonData = {
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone?.trim() || null,
+        degree: formData.degree,
+        department: formData.department.trim(),
+        year: formData.year,
+        title: formData.title.trim(),
+        description: formData.description?.trim() || null,
+        content: formData.content.trim(),
+        category: activeTab,
+        status: "pending",
+        submittedAt: new Date().toISOString(),
+      };
+
+      // Append data as JSON string (Strapi requirement)
+      submitData.append("data", JSON.stringify(jsonData));
+
+      // Append file if exists (Strapi will handle Cloudinary upload)
+      if (formData.file) {
+        submitData.append("files.file", formData.file);
+      }
+
+      // Submit to Strapi API
+      const response = await fetch(`${API_BASE_URL}/submissions`, {
+        method: "POST",
+        body: submitData,
+        // Don't set Content-Type header - let browser set it with boundary
+      });
+
+      if (!response.ok) {
+        let errorMessage = "Submission failed";
+        try {
+          const errorData = await response.json();
+          errorMessage =
+            errorData.error?.message || errorData.message || errorMessage;
+
+          // Handle specific validation errors
+          if (errorData.error?.details?.errors) {
+            const validationErrors = errorData.error.details.errors
+              .map((err) => err.message)
+              .join(", ");
+            errorMessage = `Validation Error: ${validationErrors}`;
+          }
+        } catch (e) {
+          // If error response isn't JSON, use status text
+          errorMessage = `${response.status}: ${response.statusText}`;
+        }
+        throw new Error(errorMessage);
+      }
+
+      const result = await response.json();
+      console.log("Submission successful:", result);
+
+      setSubmitStatus("success");
+      setStatusMessage(
+        "Content submitted successfully! Our editors will review it soon."
+      );
+
+      // Reset form after successful submission
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        degree: "",
+        department: "",
+        year: "",
+        title: "",
+        description: "",
+        content: "",
+        file: null,
+      });
+
+      // Reset file input
+      const fileInput = document.getElementById("file");
+      if (fileInput) fileInput.value = "";
+
+      // Scroll to top to show success message
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error("Submission error:", error);
+      setSubmitStatus("error");
+      setStatusMessage(`Submission failed: ${error.message}`);
+
+      // Scroll to top to show error message
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const getContentPlaceholder = () => {
@@ -66,13 +293,30 @@ const UdaanSubmissionPortal = () => {
     <div style={styles.container}>
       <style>{cssStyles}</style>
 
+      {/* Status Messages */}
+      {submitStatus && (
+        <div className={`status-message ${submitStatus}`}>
+          <div className="status-content">
+            <span className="status-icon">
+              {submitStatus === "success" ? "✅" : "❌"}
+            </span>
+            <span className="status-text">{statusMessage}</span>
+            <button
+              className="status-close"
+              onClick={() => {
+                setSubmitStatus(null);
+                setStatusMessage("");
+              }}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <header className={`header ${isVisible ? "fade-in" : ""}`}>
         <div className="header-content">
-          {/* <h1 className="title">
-            <span className="udaan-text">Share Your Voice, Shape Our Story</span>
-            <span className="subtitle">GGV University Magazine Club</span>
-          </h1> */}
           <p className="tagline">Share Your Voice, Shape Our Story</p>
         </div>
       </header>
@@ -87,6 +331,7 @@ const UdaanSubmissionPortal = () => {
                 key={tab.id}
                 className={`tab-button ${activeTab === tab.id ? "active" : ""}`}
                 onClick={() => setActiveTab(tab.id)}
+                disabled={isSubmitting}
               >
                 <span className="tab-icon">{tab.icon}</span>
                 <span className="tab-label">{tab.label}</span>
@@ -117,7 +362,9 @@ const UdaanSubmissionPortal = () => {
                       value={formData.name}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                       placeholder="Enter your full name"
+                      maxLength="100"
                     />
                   </div>
                   <div className="form-group">
@@ -129,6 +376,7 @@ const UdaanSubmissionPortal = () => {
                       value={formData.email}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                       placeholder="your.email@example.com"
                     />
                   </div>
@@ -140,7 +388,9 @@ const UdaanSubmissionPortal = () => {
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
+                      disabled={isSubmitting}
                       placeholder="Your phone number"
+                      maxLength="15"
                     />
                   </div>
                 </div>
@@ -158,6 +408,7 @@ const UdaanSubmissionPortal = () => {
                       value={formData.degree}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                     >
                       <option value="">Select your degree</option>
                       <option value="B.Tech">B.Tech</option>
@@ -182,7 +433,9 @@ const UdaanSubmissionPortal = () => {
                       value={formData.department}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                       placeholder="e.g., Computer Science, Mechanical Engineering"
+                      maxLength="100"
                     />
                   </div>
                   <div className="form-group">
@@ -193,6 +446,7 @@ const UdaanSubmissionPortal = () => {
                       value={formData.year}
                       onChange={handleInputChange}
                       required
+                      disabled={isSubmitting}
                     >
                       <option value="">Select year</option>
                       <option value="1st Year">1st Year</option>
@@ -218,7 +472,9 @@ const UdaanSubmissionPortal = () => {
                     value={formData.title}
                     onChange={handleInputChange}
                     required
+                    disabled={isSubmitting}
                     placeholder="Enter the title of your submission"
+                    maxLength="200"
                   />
                 </div>
                 <div className="form-group">
@@ -229,6 +485,7 @@ const UdaanSubmissionPortal = () => {
                     value={formData.description}
                     onChange={handleInputChange}
                     rows="3"
+                    disabled={isSubmitting}
                     placeholder="Brief description of your work"
                   />
                 </div>
@@ -241,16 +498,21 @@ const UdaanSubmissionPortal = () => {
                     onChange={handleInputChange}
                     required
                     rows="8"
+                    disabled={isSubmitting}
                     placeholder={getContentPlaceholder()}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="file">Upload File (Optional)</label>
+                  <label htmlFor="file">
+                    Upload File{" "}
+                    {activeTab === "photography" ? "*" : "(Optional)"}
+                  </label>
                   <input
                     type="file"
                     id="file"
                     name="file"
                     onChange={handleFileChange}
+                    disabled={isSubmitting}
                     accept={
                       activeTab === "photography"
                         ? "image/*"
@@ -261,25 +523,31 @@ const UdaanSubmissionPortal = () => {
                   />
                   <small className="file-info">
                     {activeTab === "photography" &&
-                      "Accepted formats: JPG, PNG, GIF (Max 10MB)"}
+                      "Accepted formats: JPG, PNG, GIF, WebP (Max 10MB)"}
                     {activeTab === "art-design" &&
-                      "Accepted formats: JPG, PNG, PDF (Max 10MB)"}
+                      "Accepted formats: JPG, PNG, GIF, WebP, PDF (Max 10MB)"}
                     {(activeTab === "english-editorial" ||
                       activeTab === "hindi-editorial") &&
-                      "Accepted formats: DOC, DOCX, PDF, TXT (Max 5MB)"}
+                      "Accepted formats: DOC, DOCX, PDF, TXT (Max 10MB)"}
                   </small>
                 </div>
               </div>
 
               <button
                 type="button"
-                className="submit-button"
+                className={`submit-button ${isSubmitting ? "submitting" : ""}`}
                 onClick={handleSubmit}
+                disabled={isSubmitting}
               >
                 <span>
-                  Submit Your {tabs.find((tab) => tab.id === activeTab)?.label}
+                  {isSubmitting
+                    ? "Submitting..."
+                    : `Submit Your ${
+                        tabs.find((tab) => tab.id === activeTab)?.label
+                      }`}
                 </span>
-                <span className="submit-icon">→</span>
+                {!isSubmitting && <span className="submit-icon">→</span>}
+                {isSubmitting && <span className="spinner">⟳</span>}
               </button>
             </div>
           </div>
